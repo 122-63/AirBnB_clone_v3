@@ -81,9 +81,12 @@ class DBStorage:
 
         if cls not in classes.values():
             return None
+
         all_obj = self.all(cls)
         for obj in all_obj.values():
             return None
+
+        return None
 
     def count(self, cls=None):
         """Returns the number of objects in storage
