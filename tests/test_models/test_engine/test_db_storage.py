@@ -95,3 +95,25 @@ class TestFileStorage(unittest.TestCase):
     def test_count(self):
         """Returns the number of objects in
         storage matching the given class"""
+<<<<<<< HEAD
+        store_len = models.storage.count()
+        created_state = State(name='test state')
+        created_user = User(password='123456', email='test@gmail.com')
+        created_state.save()
+        created_user.save()
+        self.assertEqual(models.storage.count('State'), store_len + 1)
+        self.assertEqual(models.storage.count(), store_len + 2)
+
+    @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
+    def test_get(self):
+        """ Returns the object based on the class and its ID """
+        created_state = State(name='test state')
+        created_user = User(password='123456', email='test@gmail.com')
+        created_state.save()
+        created_user.save()
+        self.assertIs(models.storage.get(
+            'State', created_state.id), created_state)
+        self.assertIs(models.storage.get(
+            'User', created_user.id), created_state)
+=======
+>>>>>>> c36426c7ac08a8345f0791bcfcf023efdd50df4b
