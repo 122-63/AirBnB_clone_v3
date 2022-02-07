@@ -118,3 +118,7 @@ class TestFileStorage(unittest.TestCase):
     def test_count(self):
         """Returns the number of objects in
         storage matching the given class"""
+    
+    @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
+    def test_get(self):
+        """ Returns the object based on the class and its ID """
