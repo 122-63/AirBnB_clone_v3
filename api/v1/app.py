@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""configuration file"""
 from os import getenv
 from flask import Flask
 from models import storage
