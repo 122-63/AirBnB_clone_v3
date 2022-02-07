@@ -1,9 +1,10 @@
 #!/usr/bin/python3
-""" returns a JSON: "status": "OK"""
+""" returns a JSON: "status": "OK" """
 from api.v1.views import app_views
-from flask import Flask, jsonify
+from flask import jsonify
 
 
-@app.route('/status')
+@app_views.route('/status', strict_slashes=False, methods=['GET'])
 def status():
-    return jsonify({'status': "OK"})
+    """function return status"""
+    return jsonify({'status': "OK"}), 200
