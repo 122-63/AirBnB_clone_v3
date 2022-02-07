@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """configuration file"""
 from os import getenv
-from flask import Flask
+from flask import Flask, jsonify, make_response
 from models import storage
 from api.v1.views import app_views
 
@@ -14,6 +14,12 @@ app.register_blueprint(app_views, url_prefix="/api/v1")
 def teardown(exception):
     """method to handle that calls"""
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(error):
+    """handler for 404 errors"""
+    return make_response(jsonify({'error': 'Not found'}), 404)
 
 
 if __name__ == '__main__':
