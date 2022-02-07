@@ -10,11 +10,7 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-<<<<<<< HEAD
-def teardown(self):
-=======
 def teardown(exception):
->>>>>>> 18474f65b76e112b71ff476c5bc84ae284b52cc9
     """method to handle that calls"""
     storage.close()
 
