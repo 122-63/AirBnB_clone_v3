@@ -6,7 +6,7 @@ from api.v1.views import app_views
 
 app = Flask(__name__)
 
-app.register_blueprint(app_views)
+app.register_blueprint(app_views, url_prefix="/api/v1")
 
 
 @app.teardown_appcontext
@@ -23,4 +23,4 @@ if __name__ == '__main__':
     if port is None:
         port = "5000"
 
-    app.run(host=host, port=port, threaded=True)
+    app.run(host=host, port=port, threaded=True, debug=True)
