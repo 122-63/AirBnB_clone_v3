@@ -6,6 +6,7 @@ from flask import jsonify, abort, request
 from models import storage
 from models.state import State
 
+
 @app_views.route('/states', strict_slashes=False, methods=['GET'])
 def all_state():
     """ list of all State objects:"""
@@ -15,6 +16,7 @@ def all_state():
         data = state.to_dict()
         list_states.append(data)
     return jsonify(list_states)
+
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
 def states_with_id(state_id):
@@ -26,7 +28,9 @@ def states_with_id(state_id):
             return jsonify(linked)
     abort(404)
 
-@app_views.route('/states/<state_id>', strict_slashes=False, methods=['DELETE'])
+
+@app_views.route('/states/<state_id>', strict_slashes=False,
+                 methods=['DELETE'])
 def delete_state(state_id):
     """Deletes a State object"""
     states = storage.all("State").values()
@@ -36,6 +40,7 @@ def delete_state(state_id):
             storage.save()
             return jsonify({}), 200
     abort(404)
+
 
 @app_views.route('/states', strict_slashes=False, methods=['POST'])
 def post_state():
@@ -53,14 +58,25 @@ def post_state():
 
     return jsonify(obj_state.to_dict()), 201
 
+
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['PUT'])
 def put_state(state_id):
     """Updates a State object"""
     if not request.is_json:
         abort(404, description="Not a JSON")
+        # return make_response(jsonify({"error": "Not a JSON"}), 400)
 
+    updates = request.get_json()
+    obj_states = storage.get(State, state_id)
+    ignore_keys = ["id", "created_at", "updated_at"]
 
+    if obj_states:
+        for key, var in updates.items():
+            if key not in ignore_keys:
+                setattr(obj_states, key, var)
 
+        storage.save()
 
-
-
+    # return make_response(jsonify({"error": "Not a JSON"}), 400)
+        return jsonify(obj_states.to_dict())
+    abort(404)
