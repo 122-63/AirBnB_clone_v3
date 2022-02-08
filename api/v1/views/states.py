@@ -15,7 +15,7 @@ def all_state():
     for state in states:
         data = state.to_dict()
         list_states.append(data)
-    return jsonify(list_states)
+    return jsonify(list_states), 200
 
 
 @app_views.route('/states/<state_id>', strict_slashes=False, methods=['GET'])
@@ -25,7 +25,7 @@ def states_with_id(state_id):
     for state in states:
         if state.id == state_id:
             linked = state.to_dict()
-            return jsonify(linked)
+            return jsonify(linked), 201
     abort(404)
 
 
@@ -78,5 +78,5 @@ def put_state(state_id):
         storage.save()
 
     # return make_response(jsonify({"error": "Not a JSON"}), 400)
-        return jsonify(obj_states.to_dict())
+        return jsonify(obj_states.to_dict()), 200
     abort(404)
